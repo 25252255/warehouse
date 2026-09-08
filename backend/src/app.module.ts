@@ -4,12 +4,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DbHealthController } from './db-health.controller';
+import { WarehouseModule } from './warehouse/warehouse.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
+    ConfigModule.forRoot({  //ConfigModule이 .env를 읽어서 ConfigService로 사용할 수 있게 함
       isGlobal: true,
     }),
+    //ORM은 Object-Relational Mapping, 객체와 관계형 데이터베이스 테이블을 연결하는 기술
+    //Java에서 사용한 JPA/Hibernate와 같은 역할
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -28,6 +31,8 @@ import { DbHealthController } from './db-health.controller';
         retryDelay: 2000,
       }),
     }),
+
+    WarehouseModule,
   ],
   controllers: [AppController, DbHealthController],
   providers: [AppService],

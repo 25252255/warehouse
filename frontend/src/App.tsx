@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import './App.css'
+import WarehouseCreateForm from './components/WarehouseCreateForm'
 
 type DatabaseStatus = {
   connected: boolean
@@ -73,6 +74,9 @@ function App() {
         <button type="button" onClick={() => void checkDatabase()} disabled={loading}>
           다시 확인
         </button>
+
+
+        <WarehouseCreateForm />
       </section>
     </main>
   )

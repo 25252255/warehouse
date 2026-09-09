@@ -8,8 +8,12 @@ export class Warehouse {
     @Column({type: 'varchar', length: 100})
     warehouseName: string;
 
+    @Column({type: 'varchar', length: 200})
+    location: string;
+
     @Column({type: 'boolean', default: false})
     isSet: boolean;
+
 }
 
 // 1. Entity 작성

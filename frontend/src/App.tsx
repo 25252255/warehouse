@@ -73,7 +73,7 @@ function App() {
 
         <button type="button" onClick={() => void checkDatabase()} disabled={loading}>
           다시 확인
-        </button>
+        </button><hr /><hr />
 
 
         <WarehousePage />

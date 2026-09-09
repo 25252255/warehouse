@@ -7,6 +7,7 @@ import { WarehouseCreateForm } from '../components/WarehouseCreateForm'
 import { WarehouseTable } from '../components/WarehouseTable'
 import type {
   CreateWarehouseRequest,
+  UpdateWarehouseRequest,
   Warehouse,
 } from '../types/warehouse'
 
@@ -135,6 +136,55 @@ export function WarehousePage() {
     }
   }
 
+  const handleUpdateLocation = async (
+    warehouse: Warehouse,
+    location: string,
+    ): Promise<boolean> => {
+    setBusyId(warehouse.warehouseId)
+    setMessage(null)
+    setError(null)
+
+    const requestBody: UpdateWarehouseRequest = {
+        location,
+    }
+
+    try {
+        const response = await fetch(
+        `/api/warehouse/${warehouse.warehouseId}`,
+        {
+            method: 'PATCH',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        },
+        )
+
+        if (!response.ok) {
+        throw new Error(
+            `창고 수정 실패: HTTP ${response.status}`,
+        )
+        }
+
+        setMessage('창고 위치가 수정되었습니다.')
+
+        await loadWarehouses()
+
+        return true
+    } catch (requestError) {
+        setError(
+        requestError instanceof Error
+            ? requestError.message
+            : '창고 위치 수정에 실패했습니다.',
+        )
+
+        return false
+    } finally {
+        setBusyId(null)
+    }
+    }
+    
+
   return (
     <main>
       <WarehouseCreateForm
@@ -151,10 +201,11 @@ export function WarehousePage() {
         <h2>등록된 창고</h2>
 
         <WarehouseTable
-          warehouses={warehouses}
-          loading={listLoading}
-          busyId={busyId}
-          onDelete={handleDelete}
+            warehouses={warehouses}
+            loading={listLoading}
+            busyId={busyId}
+            onUpdateLocation={handleUpdateLocation}
+            onDelete={handleDelete}
         />
       </section>
     </main>

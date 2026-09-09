@@ -13,6 +13,7 @@ export function WarehouseCreateForm({
   onCreate,
 }: WarehouseCreateFormProps) {
   const [warehouseName, setWarehouseName] = useState('')
+  const [location, setLocation] = useState('')
   const [isSet, setIsSet] = useState(false)
 
   const handleSubmit = async (
@@ -22,11 +23,13 @@ export function WarehouseCreateForm({
 
     const success = await onCreate({
       warehouseName,
+      location,
       isSet,
     })
 
     if (success) {
       setWarehouseName('')
+      setLocation('')
       setIsSet(false)
     }
   }
@@ -49,6 +52,22 @@ export function WarehouseCreateForm({
               setWarehouseName(event.target.value)
             }
             placeholder="예: 인천 제1 창고"
+            required
+          />
+        </div>
+        <div className="form-row">
+          <label htmlFor="location">
+            위치
+          </label>
+
+          <input
+            id="location"
+            type="text"
+            value={location}
+            onChange={(event) =>
+              setLocation(event.target.value)
+            }
+            placeholder="예: 중구 1동"
             required
           />
         </div>

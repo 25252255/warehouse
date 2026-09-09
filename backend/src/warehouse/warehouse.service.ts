@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from 'typeorm';
 import { Warehouse } from "./warehouse.entity";
 import { CreateWarehouseDto} from './dto/create-warehouse.dto';
+import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 
 @Injectable()
 export class WarehouseService {
@@ -32,4 +33,17 @@ export class WarehouseService {
         }
 
     }
+
+    async update(warehouseId: number, updateWarehouseDto: UpdateWarehouseDto): Promise<Warehouse> {
+        const warehouse = await this.warehouseRepository.findOneBy({warehouseId,})
+
+        if (!warehouse) {
+            throw new NotFoundException(`${warehouseId}번 창고를 찾을 수 없습니다.`)
+        }
+
+        warehouse.location = updateWarehouseDto.location
+        return this.warehouseRepository.save(warehouse)
+
+    }
+
 }

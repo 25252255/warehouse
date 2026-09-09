@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, ParseIntPipe } from "@nestjs/common";
 import { WarehouseService } from "./warehouse.service";
 import { CreateWarehouseDto } from "./dto/create-warehouse.dto";
 import { Warehouse } from "./warehouse.entity";
@@ -19,5 +19,12 @@ export class WarehouseController {
         @Body() createWarehouseDto: CreateWarehouseDto,
     ): Promise<Warehouse> {
         return this.warehouseService.create(createWarehouseDto);
+    }
+
+    @Delete(':warehouseId')
+    remove(
+        @Param('warehouseId', ParseIntPipe) warehouseId: number,
+    ): Promise<void> {
+        return this.warehouseService.remove(warehouseId);
     }
 }

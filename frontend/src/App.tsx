@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import './App.css'
-import WarehouseCreateForm from './components/WarehouseCreateForm'
+import { WarehousePage } from './pages/WarehousePage'
 
 type DatabaseStatus = {
   connected: boolean
@@ -76,7 +76,7 @@ function App() {
         </button>
 
 
-        <WarehouseCreateForm />
+        <WarehousePage />
       </section>
     </main>
   )
